@@ -1,8 +1,8 @@
 #!/bin/bash 
 #SBATCH -J papi           # job name
 #SBATCH -o myPAPI.o%j       # output and error file name (%j expands to jobID)
-#SBATCH -n 16              # total number of mpi tasks requested
-#SBATCH -p development     # queue (partition) -- normal, development, etc.
+#SBATCH -n 1              # total number of mpi tasks requested
+#SBATCH -p normal     # queue (partition) -- normal, development, etc.
 #SBATCH -t 01:30:00        # run time (hh:mm:ss) - 1.5 hours
 #SBATCH --mail-user=eric.rincon@utexas.edu
 #SBATCH -A Galois
