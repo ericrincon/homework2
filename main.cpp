@@ -1,5 +1,4 @@
 #include <iostream>
-#include <papi.h>
 #include <array>
 #include <vector>
 #include <stdlib.h>
@@ -149,31 +148,67 @@ void printMatrix(vector<vector<double>> x) {
 }
 static void test_fail(char *file, int line, char *call, int retval);
 
-int main() {
-    /* Initialize the PAPI library */
-    retval = PAPI_library_init(PAPI_VER_CURRENT);
 
-    if (retval != PAPI_VER_CURRENT && retval > 0) {
-        fprintf(stderr,"PAPI library version mismatch!\n");
-        exit(1);
-    }
 
-    if (retval < 0) {
-        fprintf(stderr, “Initialization error!\n”);
-        exit(1);
-    }
+void handle_error (int retval)
+{
+  printf("PAPI error %d: %s\n", retval, PAPI_strerror(retval));
+  exit(1);
+}
+void init_papi() {
+  int retval = PAPI_library_init(PAPI_VER_CURRENT);
+  if (retval != PAPI_VER_CURRENT && retval < 0) {
+    printf("PAPI library version mismatch!\n");
+    exit(1);
+  }
+  if (retval < 0) handle_error(retval);
 
-    fprintf(stdout, “PAPI Version Number\n”);
-    fprintf(stdout, “MAJOR:    %d\n”, PAPI_MAJOR(retval));
-    fprintf(stdout, “MINOR:    %d\n”, PAPI_MINOR(retval));
-    fprintf(stdout, “REVISION: %d\n”, PAPI_REVISION(retval));
+  std::cout << "PAPI Version Number: MAJOR: " << PAPI_VERSION_MAJOR(retval)
+            << " MINOR: " << PAPI_VERSION_MINOR(retval)
+            << " REVISION: " << PAPI_VERSION_REVISION(retval) << "\n";
+}
+int begin_papi(int Event) {
+  int EventSet = PAPI_NULL;
+  int rv;
+  /* Create the Event Set */
+  if ((rv = PAPI_create_eventset(&EventSet)) != PAPI_OK)
+    handle_error(rv);
+  if ((rv = PAPI_add_event(EventSet, Event)) != PAPI_OK)
+    handle_error(rv);
+  /* Start counting events in the Event Set */
+  if ((rv = PAPI_start(EventSet)) != PAPI_OK)
+    handle_error(rv);
+  return EventSet;
+}
+long_long end_papi(int EventSet) {
+  long_long retval;
+  int rv;
 
-    float real_time, proc_time, mflops;
-    long long flpins;
+  /* get the values */
+  if ((rv = PAPI_stop(EventSet, &retval)) != PAPI_OK)
+    handle_error(rv);
+
+  /* Remove all events in the eventset */
+  if ((rv = PAPI_cleanup_eventset(EventSet)) != PAPI_OK)
+    handle_error(rv);
+
+  /* Free all memory and data structures, EventSet must be empty. */
+  if ((rv = PAPI_destroy_eventset(&EventSet)) != PAPI_OK)
+    handle_error(rv);
+
+  return retval;
+}
+
+int main(int argc, char** argv) {init_papi();
+
     vector<vector<double>> A = allocateMatrix(10, 10, true);
     vector<vector<double>> B = allocateMatrix(10, 10, true);
 
+    int EventSet = begin_papi(PAPI_TOT_INS);
     vector<vector<double>> C = matrixMultipyIJK(A, B);
+    long_long r = end_papi(EventSet);
+    std::cout << "Total instructions: " << r << "\n";
+
     printMatrix(C);
 
     int retval, EventSet = PAPI_NULL;
