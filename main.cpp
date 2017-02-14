@@ -1,14 +1,7 @@
 #include <iostream>
 #include <array>
 #include <vector>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <memory.h>
-#include <malloc.h>
-#include "papi.h"
+#include <papi.h>
 using namespace std;
 
 
@@ -200,6 +193,11 @@ long_long end_papi(int EventSet) {
 }
 
 int main(int argc, char** argv) {init_papi();
+    int PAPI_events[] = {
+            PAPI_TOT_CYC,
+            PAPI_L2_DCM,
+            PAPI_L2_DCA
+    };
 
     vector<vector<double>> A = allocateMatrix(10, 10, true);
     vector<vector<double>> B = allocateMatrix(10, 10, true);
@@ -211,29 +209,7 @@ int main(int argc, char** argv) {init_papi();
 
     printMatrix(C);
 
-    int retval, EventSet = PAPI_NULL;
-    long_long values[1];
-
-    /* Initialize the PAPI library */
-    retval = PAPI_library_init(PAPI_VER_CURRENT);
-
-    if (retval != PAPI_VER_CURRENT) {
-        fprintf(stderr, "PAPI library init error!\n");
-        exit(1);
-    }
-
-/* Create the Event Set */
-    if (PAPI_create_eventset(&EventSet) != PAPI_OK)
-        printf("not sure what to do..");
     C = matrixMultipyJIK(A, B);
-    /* Collect the data into the variables passed in */
-    if((retval=PAPI_flops( &real_time, &proc_time, &flpins, &mflops))<PAPI_OK)
-        test_fail(__FILE__, __LINE__, "PAPI_flops", retval);
-
-    printf("Real_time:\t%f\nProc_time:\t%f\nTotal flpins:\t%lld\nMFLOPS:\t\t%f\n",
-           real_time, proc_time, flpins, mflops);
-    printf("%s\tPASSED\n", __FILE__);
-    PAPI_shutdown();
     printMatrix(C);
 
     C = matrixMultipyKJI(A, B);
