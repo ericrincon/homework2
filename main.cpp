@@ -150,6 +150,24 @@ void printMatrix(vector<vector<double>> x) {
 static void test_fail(char *file, int line, char *call, int retval);
 
 int main() {
+    /* Initialize the PAPI library */
+    retval = PAPI_library_init(PAPI_VER_CURRENT);
+
+    if (retval != PAPI_VER_CURRENT && retval > 0) {
+        fprintf(stderr,"PAPI library version mismatch!\n");
+        exit(1);
+    }
+
+    if (retval < 0) {
+        fprintf(stderr, “Initialization error!\n”);
+        exit(1);
+    }
+
+    fprintf(stdout, “PAPI Version Number\n”);
+    fprintf(stdout, “MAJOR:    %d\n”, PAPI_MAJOR(retval));
+    fprintf(stdout, “MINOR:    %d\n”, PAPI_MINOR(retval));
+    fprintf(stdout, “REVISION: %d\n”, PAPI_REVISION(retval));
+
     float real_time, proc_time, mflops;
     long long flpins;
     vector<vector<double>> A = allocateMatrix(10, 10, true);
