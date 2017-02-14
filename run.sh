@@ -10,6 +10,7 @@
 #SBATCH --mail-type=begin  # email me when the job starts
 #SBATCH --mail-type=end    # email me when the job finishes
 module load papi
+module load gcc
 git pull
 gcc main.cpp -O3 -std=c++11
 ./main.out
