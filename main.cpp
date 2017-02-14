@@ -1,7 +1,11 @@
 #include <iostream>
 #include <array>
 #include <vector>
-#include <papi.h>
+extern "C"
+{
+    #include <papi.h>
+
+}
 using namespace std;
 
 
@@ -150,6 +154,7 @@ void handle_error (int retval)
 }
 void init_papi() {
   int retval = PAPI_library_init(PAPI_VER_CURRENT);
+
   if (retval != PAPI_VER_CURRENT && retval < 0) {
     printf("PAPI library version mismatch!\n");
     exit(1);
