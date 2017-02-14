@@ -12,5 +12,7 @@
 module load papi
 module load gcc
 git pull
-gcc main.cpp -O3 -std=gnu++0x
+gcc -c main.cpp -O3 -std=gnu++0x $PAPI_CFLAGS
+gcc -o main main.o $PAPI_LIB
+
 ./main.out
