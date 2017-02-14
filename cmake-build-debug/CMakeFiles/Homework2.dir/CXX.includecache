@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/eric/Documents/School/PP/Homework2/main.cpp
+iostream
+-
+papi.h
+-
+array
+-
+vector
+-
+stdlib.h
+-
+stdio.h
+-
+unistd.h
+-
+errno.h
+-
+sys/types.h
+-
+memory.h
+-
+malloc.h
+-
+papi.h
+/home/eric/Documents/School/PP/Homework2/papi.h
+
