@@ -12,5 +12,5 @@
 module load papi
 module load gcc
 git pull
-gcc main.cpp -O3 -std=c++11
+gcc main.cpp -O3 -std=gnu++0x
 ./main.out
