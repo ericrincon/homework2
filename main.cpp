@@ -1,11 +1,8 @@
 #include <iostream>
 #include <array>
 #include <vector>
-extern "C"
-{
-    #include "papi.h"
 
-}
+#include <papi.h>
 using namespace std;
 
 
