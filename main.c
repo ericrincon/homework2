@@ -183,6 +183,8 @@ int main(int argc, char** argv) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
 
+    printf("\n\n");
+
 
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 3 );
@@ -204,6 +206,7 @@ int main(int argc, char** argv) {
            counters[6], counters[0] );
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
+    printf("\n\n");
 
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 3 );
@@ -226,6 +229,7 @@ int main(int argc, char** argv) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
 
+    printf("\n\n");
 
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 3 );
@@ -247,6 +251,7 @@ int main(int argc, char** argv) {
            counters[6], counters[0] );
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
+    printf("\n\n");
 
 
     PAPI_library_init(PAPI_VER_CURRENT);
@@ -269,6 +274,7 @@ int main(int argc, char** argv) {
            counters[6], counters[0] );
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
+    printf("\n\n");
 
 
     PAPI_library_init(PAPI_VER_CURRENT);
