@@ -14,16 +14,16 @@ git pull
 
 icc -L$TACC_PAPI_LIB -lpapi -I$TACC_PAPI_INC -O3 -fp-model precise -o mmmPAPI mmmPAPI.c
 echo 50 50
-./main 50 50
+./mmmPAPI 50 50
 echo 200 200
-./main 200 200
+./mmmPAPI 200 200
 echo 2000 2000
-./main 2000 2000
+./mmmPAPI 2000 2000
 
 icc -O3 -fp-model precise -o mmmGetTime mmmGetTime.c
 echo 50 50
-./main 50 50
+./mmmGetTime 50 50
 echo 200 200
-./main 200 200
+./mmmGetTime 200 200
 echo 2000 2000
-./main 2000 2000
+./mmmGetTime 2000 2000
