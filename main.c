@@ -153,6 +153,8 @@ int main(int argc, char** argv) {
     long long counters[3];
     int PAPI_events[] = {
             PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA,
             PAPI_L2_DCM,
             PAPI_L2_DCA };
     PAPI_library_init(PAPI_VER_CURRENT);
@@ -160,9 +162,13 @@ int main(int argc, char** argv) {
     double** C = matrixMultipyIJK(A, B, rows, cols);
 
     PAPI_read_counters( counters, 3 );
-    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
+    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
+           counters[0] );
+    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[3] / (double)counters[4],
            counters[0] );
 
 
