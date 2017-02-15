@@ -816,28 +816,28 @@ int main(int argc, char** argv) {
     int rows = atoi(argv[1]);
     int cols = atoi(argv[2]);
 
-    printf("Start IJK");
+    printf("Start IJK\n");
     ijk(rows, cols);
     printf("END IJK\n\n");
 
-    printf("Start JIK");
+    printf("Start JIK\n");
     jik(rows, cols);
     printf("END JIK\n\n");
 
-    printf("Start jki");
+    printf("Start jki\n");
     jki(rows, cols);
     printf("END jki\n\n");
 
-    printf("Start kji");
+    printf("Start kji\n");
     kji(rows, cols);
     printf("END kji\n\n");
 
 
-    printf("Start IKJ");
+    printf("Start IKJ\n");
     IKJ(rows, cols);
     printf("END IKJ\n\n");
 
-    printf("Start KIJ");
+    printf("Start KIJ\n");
     KIJ(rows, cols);
     printf("END KIJ\n\n");
 
