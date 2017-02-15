@@ -142,184 +142,705 @@ double** matrixMultipyKIJ(double** x, double** y, int r, int c) {
 
 
 
-int main(int argc, char** argv) {
-    int rows = atoi(argv[1]);
-    int cols = atoi(argv[2]);
+void ijk(int rows, int cols) {
 
     double** A = allocateMatrix(rows, cols, true);
     double** B = allocateMatrix(rows, cols, true);
 
     int i, j, k;
     long long counters[3];
-    int PAPI_events[] = {
+    int PAPI_events_L1[] = {
             PAPI_TOT_CYC,
             PAPI_L1_DCM,
-            PAPI_L1_DCA,
-            PAPI_L2_DCM,
-            PAPI_L2_DCA,
-            PAPI_TOT_INS,
+            PAPI_L1_DCA
+    };
+
+
+    int PAPI_events_L2[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+    int PAPI_events_other[] = {
+            PAPI_TOT_CYC,
             PAPI_LD_INS,
             PAPI_FP_INS
     };
+
+    int PAPI_events_ins[] = {
+            PAPI_TOT_CYC,
+            PAPI_TOT_INS
+    };
+
+
+
+    /**L1 Cache Misses**/
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 8 );
+    i = PAPI_start_counters( PAPI_events_L1, 3);
 
     double** C = matrixMultipyIJK(A, B, rows, cols);
 
-    PAPI_read_counters( counters, 8 );
+    PAPI_read_counters( counters, 3 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
            counters[0] );
-    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[3],
-           (double)counters[3] / (double)counters[4],
-           counters[0] );
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
-    printf("%lld Total instructions in %lld cycles\n",
-           counters[5], counters[0] );
-    printf("%lld Total load instructions in %lld cycles\n",
-           counters[6], counters[0] );
-    printf("%lld Total floating point instructions  in %lld cycles\n",
-           counters[7], counters[0] );
-
     printf("\n\n");
     free(A);
     free(B);
+    /**L1 Cache Misses End**/
 
 
+    /**L2 Cache Misses**/
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L2, 3);
+
+    C = matrixMultipyIJK(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    /**L2 Cache Misses End**/
+
+
+
+    /**INS  **/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_ins, 3);
+
+    C = matrixMultipyIJK(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld Total instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**INS End**/
+
+
+
+
+    /**Other Start**/
     A = allocateMatrix(rows, cols, true);
     B = allocateMatrix(rows, cols, true);
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 8 );
+    i = PAPI_start_counters( PAPI_events_other, 3);
+    C = matrixMultipyIJK(A, B, rows, cols);
+    PAPI_read_counters( counters, 3 );
+
+    printf("%lld Total load instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("%lld Total floating point instructions  in %lld cycles\n",
+           counters[2], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+
+    /**Other End**/
+
+
+
+}
+void jik(int rows, int cols) {
+
+    double** A = allocateMatrix(rows, cols, true);
+    double** B = allocateMatrix(rows, cols, true);
+
+    int i, j, k;
+    long long counters[3];
+    int PAPI_events_L1[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+
+    int PAPI_events_L2[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+    int PAPI_events_other[] = {
+            PAPI_TOT_CYC,
+            PAPI_LD_INS,
+            PAPI_FP_INS
+    };
+
+    int PAPI_events_ins[] = {
+            PAPI_TOT_CYC,
+            PAPI_TOT_INS
+    };
+
+
+
+    /**L1 Cache Misses**/
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L1, 3);
+
+    double** C = matrixMultipyJIK(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3 );
+    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    printf("%lld Total cycles in %lld cycles\n",
+           counters[0], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**L1 Cache Misses End**/
+
+
+    /**L2 Cache Misses**/
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L2, 3);
+
     C = matrixMultipyJIK(A, B, rows, cols);
-    PAPI_read_counters( counters, 8 );
-    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
            counters[0] );
-    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[3],
-           (double)counters[3] / (double)counters[4],
-           counters[0] );
-    printf("%lld Total cycles in %lld cycles\n",
-           counters[0], counters[0] );
+    /**L2 Cache Misses End**/
+
+
+
+    /**INS  **/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_ins, 3);
+
+    C = matrixMultipyJIK(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
     printf("%lld Total instructions in %lld cycles\n",
-           counters[5], counters[0] );
+           counters[1], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**INS End**/
+
+
+
+
+    /**Other Start**/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_other, 3);
+    C = matrixMultipyJIK(A, B, rows, cols);
+    PAPI_read_counters( counters, 3 );
+
     printf("%lld Total load instructions in %lld cycles\n",
-           counters[6], counters[0] );
+           counters[1], counters[0] );
     printf("%lld Total floating point instructions  in %lld cycles\n",
-           counters[7], counters[0] );
+           counters[2], counters[0] );
     printf("\n\n");
     free(A);
     free(B);
 
-    A = allocateMatrix(rows, cols, true);
-    B = allocateMatrix(rows, cols, true);
+    /**Other End**/
+
+
+
+}
+void jki(int rows, int cols) {
+
+    double** A = allocateMatrix(rows, cols, true);
+    double** B = allocateMatrix(rows, cols, true);
+
+    int i, j, k;
+    long long counters[3];
+    int PAPI_events_L1[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+
+    int PAPI_events_L2[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+    int PAPI_events_other[] = {
+            PAPI_TOT_CYC,
+            PAPI_LD_INS,
+            PAPI_FP_INS
+    };
+
+    int PAPI_events_ins[] = {
+            PAPI_TOT_CYC,
+            PAPI_TOT_INS
+    };
+
+
+
+    /**L1 Cache Misses**/
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 8 );
-    C = matrixMultipyKJI(A, B, rows, cols);
-    PAPI_read_counters( counters, 8 );
+    i = PAPI_start_counters( PAPI_events_L1, 3);
+
+    double** C = matrixMultipyJKI(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
            counters[0] );
-    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[3],
-           (double)counters[3] / (double)counters[4],
-           counters[0] );
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
-    printf("%lld Total instructions in %lld cycles\n",
-           counters[5], counters[0] );
-    printf("%lld Total load instructions in %lld cycles\n",
-           counters[6], counters[0] );
-    printf("%lld Total floating point instructions  in %lld cycles\n",
-           counters[7], counters[0] );
-
     printf("\n\n");
     free(A);
     free(B);
+    /**L1 Cache Misses End**/
 
 
-    A = allocateMatrix(rows, cols, true);
-    B = allocateMatrix(rows, cols, true);
-    PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 8 );
-    C = matrixMultipyKIJ(A, B, rows, cols);
-    PAPI_read_counters( counters, 8 );
-    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[1],
-           (double)counters[1] / (double)counters[2],
-           counters[0] );
-    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[3],
-           (double)counters[3] / (double)counters[4],
-           counters[0] );
-    printf("%lld Total cycles in %lld cycles\n",
-           counters[0], counters[0] );
-    printf("%lld Total instructions in %lld cycles\n",
-           counters[5], counters[0] );
-    printf("%lld Total load instructions in %lld cycles\n",
-           counters[6], counters[0] );
-    printf("%lld Total floating point instructions  in %lld cycles\n",
-           counters[7], counters[0] );
-    printf("\n\n");
-    free(A);
-    free(B);
-
-    A = allocateMatrix(rows, cols, true);
-    B = allocateMatrix(rows, cols, true);
-
+    /**L2 Cache Misses**/
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 8 );
-    C = matrixMultipyIKJ(A, B, rows, cols);
-    PAPI_read_counters( counters, 8 );
-    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[1],
-           (double)counters[1] / (double)counters[2],
-           counters[0] );
-    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[3],
-           (double)counters[3] / (double)counters[4],
-           counters[0] );
-    printf("%lld Total cycles in %lld cycles\n",
-           counters[0], counters[0] );
-    printf("%lld Total instructions in %lld cycles\n",
-           counters[5], counters[0] );
-    printf("%lld Total load instructions in %lld cycles\n",
-           counters[6], counters[0] );
-    printf("%lld Total floating point instructions  in %lld cycles\n",
-           counters[7], counters[0] );
-    printf("\n\n");
-    free(A);
-    free(B);
+    i = PAPI_start_counters( PAPI_events_L2, 3);
 
-    A = allocateMatrix(rows, cols, true);
-    B = allocateMatrix(rows, cols, true);
-    PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyJKI(A, B, rows, cols);
-    PAPI_read_counters( counters, 8 );
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    /**L2 Cache Misses End**/
+
+
+
+    /**INS  **/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_ins, 3);
+
+    C = matrixMultipyJKI(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld Total instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**INS End**/
+
+
+
+
+    /**Other Start**/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_other, 3);
+    C = matrixMultipyJKI(A, B, rows, cols);
+    PAPI_read_counters( counters, 3 );
+
+    printf("%lld Total load instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("%lld Total floating point instructions  in %lld cycles\n",
+           counters[2], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+
+    /**Other End**/
+
+
+
+}
+void kji(int rows, int cols) {
+
+    double** A = allocateMatrix(rows, cols, true);
+    double** B = allocateMatrix(rows, cols, true);
+
+    int i, j, k;
+    long long counters[3];
+    int PAPI_events_L1[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+
+    int PAPI_events_L2[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+    int PAPI_events_other[] = {
+            PAPI_TOT_CYC,
+            PAPI_LD_INS,
+            PAPI_FP_INS
+    };
+
+    int PAPI_events_ins[] = {
+            PAPI_TOT_CYC,
+            PAPI_TOT_INS
+    };
+
+
+
+    /**L1 Cache Misses**/
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L1, 3);
+
+    double** C = matrixMultipyKJI(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
            counters[0] );
+    printf("%lld Total cycles in %lld cycles\n",
+           counters[0], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**L1 Cache Misses End**/
+
+
+    /**L2 Cache Misses**/
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L2, 3);
+
+    C = matrixMultipyKJI(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
     printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[3],
-           (double)counters[3] / (double)counters[4],
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    /**L2 Cache Misses End**/
+
+
+
+    /**INS  **/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_ins, 3);
+
+    C = matrixMultipyKJI(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld Total instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**INS End**/
+
+
+
+
+    /**Other Start**/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_other, 3);
+    C = matrixMultipyKJI(A, B, rows, cols);
+    PAPI_read_counters( counters, 3 );
+
+    printf("%lld Total load instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("%lld Total floating point instructions  in %lld cycles\n",
+           counters[2], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+
+    /**Other End**/
+
+
+
+}
+void IKJ(int rows, int cols) {
+
+    double** A = allocateMatrix(rows, cols, true);
+    double** B = allocateMatrix(rows, cols, true);
+
+    int i, j, k;
+    long long counters[3];
+    int PAPI_events_L1[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+
+    int PAPI_events_L2[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+    int PAPI_events_other[] = {
+            PAPI_TOT_CYC,
+            PAPI_LD_INS,
+            PAPI_FP_INS
+    };
+
+    int PAPI_events_ins[] = {
+            PAPI_TOT_CYC,
+            PAPI_TOT_INS
+    };
+
+
+
+    /**L1 Cache Misses**/
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L1, 3);
+
+    double** C = matrixMultipyIKJ(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3 );
+    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
            counters[0] );
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**L1 Cache Misses End**/
+
+
+    /**L2 Cache Misses**/
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L2, 3);
+
+    C = matrixMultipyIKJ(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    /**L2 Cache Misses End**/
+
+
+
+    /**INS  **/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_ins, 3);
+
+    C = matrixMultipyIKJ(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
     printf("%lld Total instructions in %lld cycles\n",
-           counters[5], counters[0] );
+           counters[1], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**INS End**/
+
+
+
+
+    /**Other Start**/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_other, 3);
+    C = matrixMultipyIKJ(A, B, rows, cols);
+    PAPI_read_counters( counters, 3 );
+
     printf("%lld Total load instructions in %lld cycles\n",
-           counters[6], counters[0] );
+           counters[1], counters[0] );
     printf("%lld Total floating point instructions  in %lld cycles\n",
-           counters[7], counters[0] );
+           counters[2], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+
+    /**Other End**/
+
+
+
+}
+void KIJ(int rows, int cols) {
+
+    double** A = allocateMatrix(rows, cols, true);
+    double** B = allocateMatrix(rows, cols, true);
+
+    int i, j, k;
+    long long counters[3];
+    int PAPI_events_L1[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+
+    int PAPI_events_L2[] = {
+            PAPI_TOT_CYC,
+            PAPI_L1_DCM,
+            PAPI_L1_DCA
+    };
+
+    int PAPI_events_other[] = {
+            PAPI_TOT_CYC,
+            PAPI_LD_INS,
+            PAPI_FP_INS
+    };
+
+    int PAPI_events_ins[] = {
+            PAPI_TOT_CYC,
+            PAPI_TOT_INS
+    };
+
+
+
+    /**L1 Cache Misses**/
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L1, 3);
+
+    double** C = matrixMultipyKIJ(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3 );
+    printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    printf("%lld Total cycles in %lld cycles\n",
+           counters[0], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**L1 Cache Misses End**/
+
+
+    /**L2 Cache Misses**/
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_L2, 3);
+
+    C = matrixMultipyKIJ(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
+           counters[1],
+           (double)counters[1] / (double)counters[2],
+           counters[0] );
+    /**L2 Cache Misses End**/
+
+
+
+    /**INS  **/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_ins, 3);
+
+    C = matrixMultipyKIJ(A, B, rows, cols);
+
+    PAPI_read_counters( counters, 3);
+
+    printf("%lld Total instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+    /**INS End**/
+
+
+
+
+    /**Other Start**/
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
+
+    PAPI_library_init(PAPI_VER_CURRENT);
+    i = PAPI_start_counters( PAPI_events_other, 3);
+    C = matrixMultipyKIJ(A, B, rows, cols);
+    PAPI_read_counters( counters, 3 );
+
+    printf("%lld Total load instructions in %lld cycles\n",
+           counters[1], counters[0] );
+    printf("%lld Total floating point instructions  in %lld cycles\n",
+           counters[2], counters[0] );
+    printf("\n\n");
+    free(A);
+    free(B);
+
+    /**Other End**/
+
+
+
+}
+
+
+
+
+int main(int argc, char** argv) {
+    int rows = atoi(argv[1]);
+    int cols = atoi(argv[2]);
+
+    printf("Start IJK");
+    ijk(rows, cols);
+    printf("END IJK\n\n");
+
+    printf("Start JIK");
+    jik(rows, cols);
+    printf("END JIK\n\n");
+
+    printf("Start jki");
+    jki(rows, cols);
+    printf("END jki\n\n");
+
+    printf("Start kji");
+    kji(rows, cols);
+    printf("END kji\n\n");
+
+
+    printf("Start IKJ");
+    IKJ(rows, cols);
+    printf("END IKJ\n\n");
+
+    printf("Start KIJ");
+    KIJ(rows, cols);
+    printf("END KIJ\n\n");
+
     return 0;
 }
 
