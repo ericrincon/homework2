@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
             PAPI_L2_DCM,
             PAPI_L2_DCA };
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 5);
     double** C = matrixMultipyIJK(A, B, rows, cols);
 
     PAPI_read_counters( counters, 3 );
