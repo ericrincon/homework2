@@ -154,7 +154,7 @@ int main(int argc, char** argv) {
     double** A = allocateMatrix(rows, cols, true);
     double** B = allocateMatrix(rows, cols, true);
 
-
+    struct timespec tick, tock;
     uint64_t execTime; /*time in nanoseconds */
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     double** C = matrixMultipyIJK(A, B, rows, cols);
