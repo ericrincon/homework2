@@ -189,8 +189,8 @@ void ijk(int rows, int cols) {
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**L1 Cache Misses End**/
 
 
@@ -224,8 +224,8 @@ void ijk(int rows, int cols) {
     printf("%lld Total instructions in %lld cycles\n",
            counters[1], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**INS End**/
 
 
@@ -245,8 +245,8 @@ void ijk(int rows, int cols) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[2], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
 
     /**Other End**/
 
@@ -300,8 +300,8 @@ void jik(int rows, int cols) {
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**L1 Cache Misses End**/
 
 
@@ -335,8 +335,8 @@ void jik(int rows, int cols) {
     printf("%lld Total instructions in %lld cycles\n",
            counters[1], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**INS End**/
 
 
@@ -356,8 +356,8 @@ void jik(int rows, int cols) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[2], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
 
     /**Other End**/
 
@@ -411,8 +411,8 @@ void jki(int rows, int cols) {
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**L1 Cache Misses End**/
 
 
@@ -446,8 +446,8 @@ void jki(int rows, int cols) {
     printf("%lld Total instructions in %lld cycles\n",
            counters[1], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**INS End**/
 
 
@@ -467,8 +467,8 @@ void jki(int rows, int cols) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[2], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
 
     /**Other End**/
 
@@ -522,8 +522,8 @@ void kji(int rows, int cols) {
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**L1 Cache Misses End**/
 
 
@@ -557,8 +557,8 @@ void kji(int rows, int cols) {
     printf("%lld Total instructions in %lld cycles\n",
            counters[1], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**INS End**/
 
 
@@ -578,8 +578,8 @@ void kji(int rows, int cols) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[2], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
 
     /**Other End**/
 
@@ -633,8 +633,8 @@ void IKJ(int rows, int cols) {
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**L1 Cache Misses End**/
 
 
@@ -668,8 +668,8 @@ void IKJ(int rows, int cols) {
     printf("%lld Total instructions in %lld cycles\n",
            counters[1], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**INS End**/
 
 
@@ -689,8 +689,8 @@ void IKJ(int rows, int cols) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[2], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
 
     /**Other End**/
 
@@ -744,8 +744,8 @@ void KIJ(int rows, int cols) {
     printf("%lld Total cycles in %lld cycles\n",
            counters[0], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**L1 Cache Misses End**/
 
 
@@ -779,8 +779,8 @@ void KIJ(int rows, int cols) {
     printf("%lld Total instructions in %lld cycles\n",
            counters[1], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
     /**INS End**/
 
 
@@ -800,8 +800,8 @@ void KIJ(int rows, int cols) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[2], counters[0] );
     printf("\n\n");
-    free(A);
-    free(B);
+    
+    
 
     /**Other End**/
 
