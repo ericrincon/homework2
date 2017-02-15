@@ -6,6 +6,8 @@ typedef int bool;
 #define true 1
 #define false 0
 
+int clock_gettime(clockid_t clk_id, struct timespec *tp);
+int clock_getres (clockid_t clk_id, struct timespec *res);
 
 void printMatrix(double** x, int r, int c) {
     int i, j;
