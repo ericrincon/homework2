@@ -13,6 +13,9 @@ module load papi
 module load gcc
 git pull
 icc -L$TACC_PAPI_LIB -lpapi -I$TACC_PAPI_INC -O3 -fp-model precise -o main main.c
+echo 50 50
 ./main 50 50
+echo 200 200
 ./main 200 200
+echo 2000 2000
 ./main 2000 2000
