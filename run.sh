@@ -2,7 +2,7 @@
 #SBATCH -J papi           # job name
 #SBATCH -o myPAPI.o%j       # output and error file name (%j expands to jobID)
 #SBATCH -n 1              # total number of mpi tasks requested
-#SBATCH -p normal     # queue (partition) -- normal, development, etc.
+#SBATCH -p serial     # queue (partition) -- normal, development, etc.
 #SBATCH -t 01:30:00        # run time (hh:mm:ss) - 1.5 hours
 #SBATCH --mail-user=eric.rincon@utexas.edu
 #SBATCH -A Galois
@@ -12,7 +12,7 @@
 module load papi
 module load gcc
 git pull
-gcc -c main.cpp -O3 -std=gnu++0x $PAPI_CFLAGS
-gcc -o main main.o $PAPI_LIB
-
-./main.out
+icc -L$TACC_PAPI_LIB -lpapi -I$TACC_PAPI_INC -O3 -fp-model precise -o main main.c
+./main 50 50
+./main 200 200
+./main 2000 2000
