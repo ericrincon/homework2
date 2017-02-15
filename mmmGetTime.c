@@ -155,7 +155,6 @@ int main(int argc, char** argv) {
 
 
     uint64_t execTime; /*time in nanoseconds */
-    struct timespec tick, tock;
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     double** C = matrixMultipyIJK(A, B, rows, cols);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tock);
