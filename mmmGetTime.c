@@ -161,7 +161,6 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
 
-    uint64_t execTime; /*time in nanoseconds */
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     C = matrixMultipyJIK(A, B, rows, cols);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tock);
@@ -169,7 +168,6 @@ int main(int argc, char** argv) {
     printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) execTime);
     printf("\n\n");
 
-    uint64_t execTime; /*time in nanoseconds */
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     C = matrixMultipyKJI(A, B, rows, cols);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tock);
@@ -177,7 +175,6 @@ int main(int argc, char** argv) {
     printf("elapsed process CPU time = %llu nanoseconds\n", (long long unsigned int) execTime);
     printf("\n\n");
 
-    uint64_t execTime; /*time in nanoseconds */
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     C = matrixMultipyKIJ(A, B, rows, cols);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tock);
@@ -187,7 +184,6 @@ int main(int argc, char** argv) {
 
 
 
-    uint64_t execTime; /*time in nanoseconds */
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     C = matrixMultipyIKJ(A, B, rows, cols);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tock);
@@ -197,7 +193,6 @@ int main(int argc, char** argv) {
 
 
 
-    uint64_t execTime; /*time in nanoseconds */
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tick);
     C = matrixMultipyJKI(A, B, rows, cols);
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &tock);
