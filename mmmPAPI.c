@@ -163,6 +163,7 @@ int main(int argc, char** argv) {
     };
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 8 );
+
     double** C = matrixMultipyIJK(A, B, rows, cols);
 
     PAPI_read_counters( counters, 8 );
@@ -184,7 +185,12 @@ int main(int argc, char** argv) {
            counters[7], counters[0] );
 
     printf("\n\n");
+    free(A);
+    free(B);
 
+
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
 
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 8 );
@@ -207,7 +213,11 @@ int main(int argc, char** argv) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
     printf("\n\n");
+    free(A);
+    free(B);
 
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyKJI(A, B, rows, cols);
@@ -230,7 +240,12 @@ int main(int argc, char** argv) {
            counters[7], counters[0] );
 
     printf("\n\n");
+    free(A);
+    free(B);
 
+
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyKIJ(A, B, rows, cols);
@@ -252,6 +267,11 @@ int main(int argc, char** argv) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
     printf("\n\n");
+    free(A);
+    free(B);
+
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
 
 
     PAPI_library_init(PAPI_VER_CURRENT);
@@ -275,8 +295,11 @@ int main(int argc, char** argv) {
     printf("%lld Total floating point instructions  in %lld cycles\n",
            counters[7], counters[0] );
     printf("\n\n");
+    free(A);
+    free(B);
 
-
+    A = allocateMatrix(rows, cols, true);
+    B = allocateMatrix(rows, cols, true);
     PAPI_library_init(PAPI_VER_CURRENT);
     i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyJKI(A, B, rows, cols);
