@@ -162,10 +162,10 @@ int main(int argc, char** argv) {
             PAPI_FP_INS
     };
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 8 );
     double** C = matrixMultipyIJK(A, B, rows, cols);
 
-    PAPI_read_counters( counters, 3 );
+    PAPI_read_counters( counters, 8 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
@@ -187,9 +187,9 @@ int main(int argc, char** argv) {
 
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyJIK(A, B, rows, cols);
-    PAPI_read_counters( counters, 3 );
+    PAPI_read_counters( counters, 8 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
@@ -209,9 +209,9 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyKJI(A, B, rows, cols);
-    PAPI_read_counters( counters, 3 );
+    PAPI_read_counters( counters, 8 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
@@ -232,9 +232,9 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyKIJ(A, B, rows, cols);
-    PAPI_read_counters( counters, 3 );
+    PAPI_read_counters( counters, 8 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
@@ -255,9 +255,9 @@ int main(int argc, char** argv) {
 
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyIKJ(A, B, rows, cols);
-    PAPI_read_counters( counters, 3 );
+    PAPI_read_counters( counters, 8 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
@@ -278,9 +278,9 @@ int main(int argc, char** argv) {
 
 
     PAPI_library_init(PAPI_VER_CURRENT);
-    i = PAPI_start_counters( PAPI_events, 3 );
+    i = PAPI_start_counters( PAPI_events, 8 );
     C = matrixMultipyJKI(A, B, rows, cols);
-    PAPI_read_counters( counters, 3 );
+    PAPI_read_counters( counters, 8 );
     printf("%lld L1 cache misses (%.3lf%% misses) in %lld cycles\n",
            counters[1],
            (double)counters[1] / (double)counters[2],
