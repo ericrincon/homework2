@@ -171,10 +171,17 @@ int main(int argc, char** argv) {
            (double)counters[1] / (double)counters[2],
            counters[0] );
     printf("%lld L2 cache misses (%.3lf%% misses) in %lld cycles\n",
-           counters[1],
+           counters[3],
            (double)counters[3] / (double)counters[4],
            counters[0] );
-
+    printf("%lld Total cycles in %lld cycles\n",
+           counters[0], counters[0] );
+    printf("%lld Total instructions in %lld cycles\n",
+           counters[5], counters[0] );
+    printf("%lld Total load instructions in %lld cycles\n",
+           counters[6], counters[0] );
+    printf("%lld Total floating point instructions  in %lld cycles\n",
+           counters[7], counters[0] );
 
     printMatrix(C, rows, cols);
 
