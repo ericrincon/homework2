@@ -20,7 +20,7 @@ echo 200 200
 echo 2000 2000
 ./mmmPAPI 2000 2000
 
-icc -O3 -fp-model precise -o mmmGetTime mmmGetTime.c
+icc -O3 -lrt -o mmmGetTime mmmGetTime.c
 echo 50 50
 ./mmmGetTime 50 50
 echo 200 200
